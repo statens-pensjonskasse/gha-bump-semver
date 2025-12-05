@@ -1,6 +1,7 @@
-name: Actions Ecosystem Bump Semver
+name: GHA Bump SemVer
 description: Bump a semver version up.
-author: The Actions Ecosystem Authors
+author: Statens Pensjonskasse
+
 inputs:
   current_version:
     description: The current version.
@@ -13,7 +14,7 @@ outputs:
   new_version:
     description: The bumped semver version.
 runs:
-  using: node12
+  using: node24
   main: dist/index.js
 branding:
   icon: bookmark
