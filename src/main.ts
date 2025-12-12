@@ -9,12 +9,13 @@ async function run(): Promise<void> {
     const newVersion = await bumpSemver(currentVersion, bumpLevel);
     core.setOutput('new_version', newVersion);
   } catch (e) {
-    core.error(e);
-    core.setFailed(e.message);
+    const error = e instanceof Error ? e : new Error(String(e));
+    core.error(error);
+    core.setFailed(error.message);
   }
 }
 
-async function bumpSemver(
+export async function bumpSemver(
   currentVersion: string,
   bumpLevel: string
 ): Promise<string | null> {
@@ -32,11 +33,10 @@ async function bumpSemver(
   // If the current version has 'v' prefix (e.g., v1.2.3), keep the prefix in the new version too.
   const hasVPrefix = currentVersion.startsWith('v');
 
-  const bumpedVersion = semver.inc(currentVersion, bumpLevel);
+  const newVersion = semver.inc(currentVersion, bumpLevel);
 
-  let newVersion = bumpedVersion;
   if (hasVPrefix) {
-    newVersion = `v${newVersion}`;
+    return `v${newVersion}`;
   }
 
   return newVersion;
@@ -54,4 +54,6 @@ function isReleaseType(s: string): s is semver.ReleaseType {
   ].includes(s);
 }
 
-run();
+if (require.main === module) {
+  run();
+}

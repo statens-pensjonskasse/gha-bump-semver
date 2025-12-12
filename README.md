@@ -1,80 +1,103 @@
-# Action Bump Semver
+# GHA Bump SemVer
 
-[![actions-workflow-test][actions-workflow-test-badge]][actions-workflow-test]
-[![release][release-badge]][release]
-[![license][license-badge]][license]
+[![Build and Release](https://github.com/statens-pensjonskasse/gha-bump-semver/actions/workflows/build-and-release.yaml/badge.svg)](https://github.com/statens-pensjonskasse/gha-bump-semver/actions/workflows/build-and-release.yaml)
+[![Latest Release](https://img.shields.io/github/v/release/statens-pensjonskasse/gha-bump-semver)](https://github.com/statens-pensjonskasse/gha-bump-semver/releases/latest)
+[![License](https://img.shields.io/github/license/statens-pensjonskasse/gha-bump-semver)](LICENSE)
 
-This is a GitHub Action to bump the given semver version up.
+This is a GitHub Action to bump the given semver version up. Part of SPK's public actions library.
 
-For example:
+## Features
 
-- `current_version=v1.2.3`, `level=major` -> `new_version=v2.0.0`
-- `current_version=1.2.3`, `level=major` -> `new_version=2.0.0`
-- `current_version=v1.2.3`, `level=minor` -> `new_version=v1.3.0`
-
-It would be more useful to use this with other GitHub Actions' outputs.
+✅ Supports all semver bump levels (major, minor, patch, pre-releases...)  
+✅ Preserves `v` prefix in versions (e.g., `v1.2.3` → `v2.0.0`)  
+✅ Zero dependencies runtime  
+✅ Built with TypeScript and modern tooling  
+✅ Comprehensive test coverage  
+✅ Node 24+ with built-in test runner
 
 ## Inputs
 
-|       NAME        |                                       DESCRIPTION                                        |   TYPE   | REQUIRED | DEFAULT |
-|-------------------|------------------------------------------------------------------------------------------|----------|----------|---------|
-| `current_version` | The current version.                                                                     | `string` | `true`   | `N/A`   |
-| `level`           | A semver update level `{major, premajor, minor, preminor, patch, prepatch, prerelease}`. | `string` | `false`  | `minor` |
+| Name              | Description                                                                               | Required | Default |
+|-------------------|-------------------------------------------------------------------------------------------|----------|---------|
+| `current_version` | The current semantic version                                                              | Yes      | -       |
+| `level`           | Version bump level: `major`, `minor`, `patch`, `premajor`, `preminor`, `prepatch`, `prerelease` | No       | `minor` |
 
 ## Outputs
 
-|     NAME      |        DESCRIPTION         |   TYPE   |
-|---------------|----------------------------|----------|
-| `new_version` | The bumped semver version. | `string` |
+| Name          | Description                   |
+|---------------|-------------------------------|
+| `new_version` | The bumped semantic version   |
 
-## Example
+## Usage Examples
 
-### Simple
+### Basic Usage
+
+Bump a minor version (default):
 
 ```yaml
-name: Push a new tag with minor update
+- name: Bump version
+  id: bump
+  uses: statens-pensjonskasse/gha-bump-semver@v1
+  with:
+    current_version: 'v1.2.3'
 
-on:
-  push:
-    branches:
-      - master
-
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions-ecosystem/action-get-latest-tag@v1
-        id: get-latest-tag
-
-      - uses: actions-ecosystem/action-bump-semver@v1
-        id: bump-semver
-        with:
-          current_version: ${{ steps.get-latest-tag.outputs.tag }}
-          level: minor
-
-      - uses: actions-ecosystem/action-push-tag@v1
-        with:
-          tag: ${{ steps.bump-semver.outputs.new_version }}
-          message: '${{ steps.bump-semver.outputs.new_version }}: PR #${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}'
+- name: Use new version
+  run: echo "New version is ${{ steps.bump.outputs.new_version }}"
+  # Output: New version is v1.3.0
 ```
 
-For a further practical example, see [.github/workflows/release.yml](.github/workflows/release.yml).
+### Specify Bump Level
+
+```yaml
+- name: Bump major version
+  id: bump
+  uses: statens-pensjonskasse/gha-bump-semver@v1
+  with:
+    current_version: 'v1.2.3'
+    level: 'major'
+
+- name: Use new version
+  run: echo "New version is ${{ steps.bump.outputs.new_version }}"
+  # Output: New version is v2.0.0
+```
+
+### Version Bump Examples
+
+| Input Version | Level       | Output Version |
+|---------------|-------------|----------------|
+| `v1.2.3`      | `major`     | `v2.0.0`       |
+| `v1.2.3`      | `minor`     | `v1.3.0`       |
+| `v1.2.3`      | `patch`     | `v1.2.4`       |
+| `v1.2.3`      | `premajor`  | `v2.0.0-0`     |
+| `v1.2.3`      | `preminor`  | `v1.3.0-0`     |
+| `v1.2.3`      | `prepatch`  | `v1.2.4-0`     |
+| `v1.2.3`      | `prerelease`| `v1.2.4-0`     |
+| `1.2.3`       | `major`     | `2.0.0`        |
+| `1.2.3`       | `minor`     | `1.3.0`        |
+
+> **Note:** The `v` prefix is preserved if present in the input version.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+### Workflow
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run `npm run all` to format, test, and build
+5. Commit your changes (the dist/ folder should be committed)
+6. Open a pull request
 
 ## License
 
-Copyright 2020 The Actions Ecosystem Authors.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Action Bump Semver is released under the [Apache License 2.0](./LICENSE).
+This is a derivative work based on [action-bump-semver](https://github.com/actions-ecosystem/action-bump-semver) 
+by The Actions Ecosystem Authors (Apache 2.0). See [NOTICE](NOTICE) for full attribution and changes.
 
-<!-- badge links -->
+## Maintainers
 
-[actions-workflow-test]: https://github.com/actions-ecosystem/action-bump-semver/actions?query=workflow%3ATest
-[actions-workflow-test-badge]: https://img.shields.io/github/workflow/status/actions-ecosystem/action-bump-semver/Test?label=Test&style=for-the-badge&logo=github
+Maintained by Team AppArk.
 
-[release]: https://github.com/actions-ecosystem/action-bump-semver/releases
-[release-badge]: https://img.shields.io/github/v/release/actions-ecosystem/action-bump-semver?style=for-the-badge&logo=github
-
-[license]: LICENSE
-[license-badge]: https://img.shields.io/github/license/actions-ecosystem/action-bump-semver?style=for-the-badge

@@ -1,49 +1,37 @@
 {
-  "name": "action-bump-semver",
-  "version": "1.0.0",
+  "name": "gha-bump-semver",
   "private": true,
   "description": "Bump a semver version up.",
-  "main": "lib/main.js",
-  "scripts": {
-    "build": "tsc && ncc build",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
-    "lint": "eslint src/**/*.ts",
-    "test": "jest"
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions-ecosystem/action-bump-semver.git"
+    "url": "https://github.com/statens-pensjonskasse/gha-bump-semver.git"
   },
-  "keywords": [
-    "actions",
-    "github",
-    "versioning"
-  ],
-  "author": "The Actions Ecosystem Authors",
-  "license": "Apache 2.0",
+  "author": "Statens Pensjonskasse",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "tsc && ncc build lib/main.js -o dist --minify",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "test": "node --import tsx --test src/**/*.test.ts",
+    "test:watch": "node --import tsx --test --watch src/**/*.test.ts",
+    "test:coverage": "node --import tsx --test --experimental-test-coverage src/**/*.test.ts",
+    "package": "npm run build",
+    "all": "npm run format && npm run test && npm run build"
+  },
   "dependencies": {
-    "@actions/core": "^1.2.3",
-    "@actions/github": "^2.1.1",
-    "@octokit/rest": "^16.43.1",
-    "semver": "^7.3.2"
+    "@actions/core": "^2.0.1",
+    "semver": "^7.7.3"
   },
   "devDependencies": {
-    "@octokit/webhooks": "^7.6.2",
-    "@types/jest": "^25.2.3",
-    "@types/node": "^14.0.10",
-    "@types/semver": "^7.1.0",
-    "@typescript-eslint/parser": "^3.1.0",
-    "@zeit/ncc": "^0.20.5",
-    "eslint": "^5.16.0",
-    "eslint-plugin-github": "^2.0.0",
-    "eslint-plugin-jest": "^22.21.0",
-    "eslint-plugin-prettier": "^3.1.3",
-    "jest": "^24.9.0",
-    "jest-circus": "^24.9.0",
-    "js-yaml": "^3.14.0",
-    "prettier": "^1.19.1",
-    "ts-jest": "^24.2.0",
-    "typescript": "^3.9.3"
+    "@types/node": "^24.1.0",
+    "@types/semver": "^7.7.1",
+    "@vercel/ncc": "^0.38.4",
+    "prettier": "^3.7.4",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

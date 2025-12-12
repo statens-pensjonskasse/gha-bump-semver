@@ -1,0 +1,44 @@
+# NOTICE
+
+This project is a derivative work based on "action-bump-semver" originally created by The Actions Ecosystem Authors.
+
+Original Project: https://github.com/actions-ecosystem/action-bump-semver
+Original Copyright: Copyright 2020 The Actions Ecosystem Authors
+Original License: Apache License 2.0
+
+## Changes Made
+
+This derivative work has been substantially modified and modernized by Statens Pensjonskasse (SPK) in 2025, including:
+
+- Upgraded to Node.js 24 runtime
+- Updated all dependencies to 2025 versions
+- Migrated to TypeScript 5.9 and esnext
+- Implemented comprehensive unit tests using Node's built-in test runner
+- Removed ESLint in favor of TypeScript strict mode and Prettier
+- Reduced dependencies
+- Updated documentation
+- Added Renovate configuration for dependency management
+
+## Original Apache 2.0 License
+
+The original work was licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at:
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the Apache License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the Apache License.
+
+## Current License
+
+This derivative work is licensed under the MIT License. See the LICENSE file for details.
+
+## Attribution
+
+We acknowledge and thank The Actions Ecosystem Authors for their original work on action-bump-semver,
+which formed the foundation for this project.
+
