@@ -12,7 +12,7 @@ This derivative work has been substantially modified and modernized by Statens P
 
 - Upgraded to Node.js 24 runtime
 - Updated all dependencies to 2025 versions
-- Migrated to TypeScript 5.7 and ES2022
+- Migrated to TypeScript 5.9 and esnext
 - Implemented comprehensive unit tests using Node's built-in test runner
 - Removed ESLint in favor of TypeScript strict mode and Prettier
 - Reduced dependencies

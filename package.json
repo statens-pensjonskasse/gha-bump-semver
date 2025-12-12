@@ -20,16 +20,16 @@
     "all": "npm run format && npm run test && npm run build"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
-    "semver": "^7.6.3"
+    "@actions/core": "^2.0.1",
+    "semver": "^7.7.3"
   },
   "devDependencies": {
-    "@types/node": "^22.10.1",
-    "@types/semver": "^7.5.8",
-    "@vercel/ncc": "^0.38.3",
-    "prettier": "^3.4.1",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "@types/node": "^24.1.0",
+    "@types/semver": "^7.7.1",
+    "@vercel/ncc": "^0.38.4",
+    "prettier": "^3.7.4",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=24"
