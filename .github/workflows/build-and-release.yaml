@@ -9,11 +9,10 @@ on:
 
 jobs:
   build-and-publish:
-    uses: statens-pensjonskasse/public-actions-library/.github/workflows/build-action-node.yaml@5778b6c1a494ce82a7ff1ba43e947515c83e38de # v0.2.0
+    uses: statens-pensjonskasse/public-actions-library/.github/workflows/build-action-node.yaml@92853d2c2e1f5df9938ceeef916a0e0f6f326987 # v0.2.6
     permissions:
       contents: write
       packages: write
     secrets: inherit
     with:
       node-version: '24'
-      lint-script: 'format-check'
