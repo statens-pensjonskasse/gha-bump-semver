@@ -2,58 +2,47 @@ import * as core from '@actions/core';
 import * as semver from 'semver';
 
 async function run(): Promise<void> {
-  try {
-    const currentVersion = core.getInput('current_version');
-    const bumpLevel = core.getInput('level');
+    try {
+        const currentVersion = core.getInput('current_version');
+        const bumpLevel = core.getInput('level');
 
-    const newVersion = await bumpSemver(currentVersion, bumpLevel);
-    core.setOutput('new_version', newVersion);
-  } catch (e) {
-    const error = e instanceof Error ? e : new Error(String(e));
-    core.error(error);
-    core.setFailed(error.message);
-  }
+        const newVersion = await bumpSemver(currentVersion, bumpLevel);
+        core.setOutput('new_version', newVersion);
+    } catch (e) {
+        const error = e instanceof Error ? e : new Error(String(e));
+        core.error(error);
+        core.setFailed(error.message);
+    }
 }
 
-export async function bumpSemver(
-  currentVersion: string,
-  bumpLevel: string
-): Promise<string | null> {
-  if (!semver.valid(currentVersion)) {
-    throw new Error(`${currentVersion} is not a valid semver`);
-  }
+export async function bumpSemver(currentVersion: string, bumpLevel: string): Promise<string | null> {
+    if (!semver.valid(currentVersion)) {
+        throw new Error(`${currentVersion} is not a valid semver`);
+    }
 
-  if (!isReleaseType(bumpLevel)) {
-    throw new Error(
-      `${bumpLevel} is not supported. {major, premajor, minor, preminor, patch, prepatch, prerelease} is available.`
-    );
-  }
+    if (!isReleaseType(bumpLevel)) {
+        throw new Error(
+            `${bumpLevel} is not supported. {major, premajor, minor, preminor, patch, prepatch, prerelease} is available.`,
+        );
+    }
 
-  // https://semver.org/#is-v123-a-semantic-version
-  // If the current version has 'v' prefix (e.g., v1.2.3), keep the prefix in the new version too.
-  const hasVPrefix = currentVersion.startsWith('v');
+    // https://semver.org/#is-v123-a-semantic-version
+    // If the current version has 'v' prefix (e.g., v1.2.3), keep the prefix in the new version too.
+    const hasVPrefix = currentVersion.startsWith('v');
 
-  const newVersion = semver.inc(currentVersion, bumpLevel);
+    const newVersion = semver.inc(currentVersion, bumpLevel);
 
-  if (hasVPrefix) {
-    return `v${newVersion}`;
-  }
+    if (hasVPrefix) {
+        return `v${newVersion}`;
+    }
 
-  return newVersion;
+    return newVersion;
 }
 
 function isReleaseType(s: string): s is semver.ReleaseType {
-  return [
-    'major',
-    'premajor',
-    'minor',
-    'preminor',
-    'patch',
-    'prepatch',
-    'prerelease'
-  ].includes(s);
+    return ['major', 'premajor', 'minor', 'preminor', 'patch', 'prepatch', 'prerelease'].includes(s);
 }
 
 if (require.main === module) {
-  run();
+    run();
 }
