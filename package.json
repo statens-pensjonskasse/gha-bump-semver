@@ -11,12 +11,14 @@
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc && ncc build lib/main.js -o dist --minify",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
+    "package": "npm run build",
     "test": "node --import tsx --test src/**/*.test.ts",
     "test:watch": "node --import tsx --test --watch src/**/*.test.ts",
     "test:coverage": "node --import tsx --test --experimental-test-coverage src/**/*.test.ts",
-    "package": "npm run build",
+    "lint": "biome check",
+    "lint:fix": "biome check --fix",
+    "format": "biome format",
+    "format:fix": "biome format --fix",
     "all": "npm run format && npm run test && npm run build"
   },
   "dependencies": {
@@ -24,6 +26,7 @@
     "semver": "^7.7.3"
   },
   "devDependencies": {
+    "@statens-pensjonskasse/biome": "^2.0.22",
     "@types/node": "^24.1.0",
     "@types/semver": "^7.7.1",
     "@vercel/ncc": "^0.38.4",
